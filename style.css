@@ -3,18 +3,18 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 98vh;
-    background: white;
+    min-height: 90vh;
     font-family: Montserrat;
-    font-size: 20px;
+    font-size: 15px;
+    margin-top: 100px;
 }
 
 form {
+    font-size: 20px;
     display: flex;
     flex-direction: column;
-    padding: 22px;
-    color: black;
-    background-color: rgb(202, 148, 48);
+    padding: 35px;
+    background: rgb(255, 211, 130);
 }
 
 .form-item {
@@ -26,11 +26,11 @@ form {
 }
 
 .line {
-  width: 100%;
+  width: 375px;
   height: 30px;
   font-size: 16px;
   border-radius: 5px;
-  padding: 5px;
+  padding: 7px;
   display: block;
 }
 
@@ -98,29 +98,31 @@ textarea {
     width: 100%;
     height: 40px;
     border: 0px;
-    border-radius: 10px;
-    background-color: white;
+    border-radius: 5px;
 }
 
 select {
     color: black;
     background: white;
     border-radius: 5px;
-    border: 0px;
     font-size: 16px;
 }
 
-.center {
-    text-align: center;
-}
-
 .error {
-    color: rgb(255, 68, 68);
+    color: red;
 }
 
-#messages {
-    text-align: center;
+.msg {
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: rgb(231, 130, 130);
 }
+
+.good {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
 
 .login {
     color: green;
@@ -135,7 +137,7 @@ select {
     right: 0px;
     padding: 10px;
     font-size: 20px;
-    background-color: rgb(202, 148, 48);
+    background: rgba(0, 0, 0, 0.8);
 }
 
 #header p {
