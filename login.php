@@ -49,12 +49,12 @@ else {
   $user = 'u52887';
   $pass = '1703150';
   $db = new PDO('mysql:host=localhost;dbname=u52887', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
-  $stmt = $db->prepare('SELECT id FROM USER WHERE (login = ?) AND (password = ?) ');
+  $stmt = $db->prepare('SELECT user_id FROM users WHERE (login = ?) AND (password = ?) ');
   $stmt->execute([$login, md5($password)]);
 
   if ($stmt->rowCount() > 0) {
     $_SESSION['login'] = $_POST['login'];
-    $stmt = $db->prepare("SELECT id FROM USER WHERE login = ?");
+    $stmt = $db->prepare("SELECT application_id FROM users WHERE login = ?");
     $stmt->execute([$login]);
     $_SESSION['uid'] = $stmt->fetchColumn();
     header('Location: ./');
