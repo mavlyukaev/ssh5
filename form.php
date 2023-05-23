@@ -10,37 +10,33 @@
 </head>
 <body>
   <?php
-  if (!empty($messages1['allok'])) {
-    print($messages1['allok']);
+  if (!empty($messages['allok'])) {
+    if (empty($_SESSION['login']))
+      print('<div id="header"><a href=login.php>Войти</a></div>');
+    print($messages['allok']);
   }
-  if (!empty($messages1['login'])) {
-    print($messages1['login']);
-  }
-  if (!empty($messages)) {
-    print('<div id="messages">');
-    foreach ($messages as $message) {
-      print($message);
-    }
-    print('</div>');
+  if (!empty($messages['login'])) {
+    print($messages['login']);
   }
   ?>
-
-<form action="" method="POST">
+  <form action="" method="POST">
     <div class="form-head">
         <h1>Форма</h1>
     </div>
     <div class="form-content">
       <div class="form-item">
-        <p <?php if ($errors['name']) {print 'class="error"';} ?>>Имя</p>
-        <input class="line" name="name" value="<?php echo $values['name']; ?>" />
+        <p <?php if ($errors['name1'] || $errors['name2']) {print 'class="error"';} ?>>Имя:</p>
+        <input class="line" name="name" value="<?php echo htmlspecialchars($values['name']); ?>" />
+        <?php if ($errors['name1']) {print $messages['name1'];} else if ($errors['name2']) {print $messages['name2'];};?>
       </div>
       <div class="form-item">
-        <p <?php if ($errors['email1'] || $errors['email2']) {print 'class="error"';} ?>>Email</p>
-        <input class="line" name="email" value="<?php print $values['email']; ?>" />
+        <p <?php if ($errors['email1'] || $errors['email2']) {print 'class="error"';} ?>>Email:</p>
+        <input class="line" name="email" value="<?php print htmlspecialchars($values['email']); ?>" />
+        <?php if ($errors['email1']) {print $messages['email1'];} else if ($errors['email2']) {print $messages['email2'];}?>
       </div>
       <div class="form-item">
         <div class="date">
-          <span <?php if ($errors['year1'] || $errors['year2']) {print 'class="error"';} ?>>Год рождения:</span>
+          <span <?php if ($errors['year1'] || $errors['year2']) {print 'class="error"';} ?>>День рождения</span>
           <select name="year">
             <?php 
               for ($i = 2023; $i >= 1922; $i--) {
@@ -53,8 +49,11 @@
             ?>
           </select>
         </div>
+        <?php if ($errors['year1']) {print $messages['year1'];} else if ($errors['year2']) {print $messages['year2'];}?>  
       </div>
       <div class="form-item">
+        <p <?php if ($errors['gender1'] || $errors['gender2']) {print 'class="error"';} ?>>Пол:</p>
+        <?php if ($errors['gender1']) {print $messages['gender1'];} else if ($errors['gender2']) {print $messages['gender2'];}?>  
         <ul>
           <li>
             <input type="radio" id="radioMale" name="gender" value="male" <?php if ($values['gender'] == 'male') {print 'checked';} ?>>
@@ -66,21 +65,23 @@
           </li>
         </ul>
       </div>
-      <div class="form-item">
-        <p <?php if ($errors['hand1'] || $errors['hand2']) {print 'class="error"';} ?>>Правша или левша:</p>
+      <div>
+        <p <?php if ($errors['limbs1'] || $errors['limbs2']) {print 'class="error"';} ?>>Кол-во конечностей:</p>
+        <?php if ($errors['limbs1']) {print $messages['limbs1'];} else if ($errors['limbs2']) {print $messages['limbs2'];}?>
         <ul>
           <li>
-            <input type="radio" id="radioRight" name="hand" value="right" <?php if ($values['hand'] == 'right') {print 'checked';} ?>>
-            <label for="radioRight">Правша</label>
-          </li>
-          <li>
-            <input type="radio" id="radioLeft" name="hand" value="left" <?php if ($values['hand'] == 'left') {print 'checked';} ?>>
-            <label for="radioLeft">Левша</label>
+            <input type="radio" id="radio2" name="limbs" value="2" <?php if ($values['limbs'] == '2') {print 'checked';} ?>>
+            <label for="radio2">2</label>
+            <input type="radio" id="radio4" name="limbs" value="3" <?php if ($values['limbs'] == '3') {print 'checked';} ?>>
+            <label for="radio4">3</label>
+            <input type="radio" id="radio8" name="limbs" value="4" <?php if ($values['limbs'] == '4') {print 'checked';} ?>>
+            <label for="radio8">4</label>
           </li>
         </ul>
       </div>
       <div class="form-item">
-        <p <?php if ($errors['abilities1'] || $errors['abilities2']) {print 'class="error"';} ?>>Выбери сверхспособности:</p>
+        <p <?php if ($errors['abilities1'] || $errors['abilities2']) {print 'class="error"';} ?>>Выберите сверхспособность:</p>
+        <?php if ($errors['abilities1']) {print $messages['abilities1'];} else if ($errors['abilities2']) {print $messages['abilities2'];}?>
         <ul>
           <li>
             <input type="checkbox" id="god" name="abilities[]" value=1 <?php if (isset($values['abilities']) && !empty($values['abilities']) && in_array(1, unserialize($values['abilities']))) {print 'checked';}?>>
@@ -97,28 +98,20 @@
         </ul> 
       </div>
       <div class="form-item">
-        <p class="big-text <?php if ($errors['biography1'] || $errors['biography2']) {print 'error';} ?>">Расскажи о себе:</p>
-        <textarea name="biography" cols=24 rows=4 maxlength=128 spellcheck="false"><?php if (!empty($values['biography'])) {print $values['biography'];} ?></textarea>
+        <p class="big-text <?php if ($errors['biography1'] || $errors['biography2']) {print 'error';} ?>">Биография:</p>
+        <?php if ($errors['biography1']) {print $messages['biography1'];} else if ($errors['biography2']) {print $messages['biography2'];}?>
+        <textarea name="biography" cols=24 rows=4 maxlength=128 spellcheck="false"><?php if (!empty($values['biography'])) {print htmlspecialchars($values['biography']);} ?></textarea>
       </div>
     </div>  
     <div class="send">
       <div class="contract">
         <input type="checkbox" id="checkboxContract" name="checkboxContract" <?php if ($values['checkboxContract'] == '1') {print 'checked';} ?>>
-        <label for="checkboxContract" <?php if ($errors['checkboxContract']) {print 'class="error"';} ?>>С контрактом ознакомлен</label>
+        <label for="checkboxContract" <?php if ($errors['checkboxContract']) {print 'class="error"';} ?>>Ознакомлен с контрактом.</label>
+        <?php if ($errors['checkboxContract']) {print $messages['checkboxContract'];} ?>
       </div>
-      <input class="btn" type="submit" name="submit" value="Отправить" />
+      <input class="btn" type="submit" name="submit" value="send" />
     </div>
-            <div class="login">
-                <p> <a href="login.php">У меня уже есть аккаунт</a></p>
-            </div>';
-                <div class="logout">
-                <form action="index.php" method="post">
-		   <p class = "button">
-                      <input name="logout" type="submit" value="Выйти">
-                   </p>
-                </form>
-                </div>';
-             ?>
+    <?php if (!empty($_SESSION['login'])) {echo '<input type="hidden" name="token" value="' . $_SESSION["token"] . '">'; } ?>
   </form>
 </body> 
 </html>
