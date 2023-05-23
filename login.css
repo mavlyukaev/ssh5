@@ -4,17 +4,16 @@ body {
     align-items: center;
     flex-direction: column;
     min-height: 98vh;
-    background: white;
     font-family: Montserrat;
-    font-size: 20px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    padding: 22px;
-    color: black;
-    background-color: rgb(202, 148, 48);
+    padding: 30px;
+    background: rgb(255, 211, 130);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .form-content {
